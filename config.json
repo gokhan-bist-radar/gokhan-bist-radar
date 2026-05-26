@@ -1,0 +1,13 @@
+{
+  "telegram_bot_token": "BURAYA_TELEGRAM_BOT_TOKEN",
+  "telegram_chat_id": "BURAYA_CHAT_ID",
+  "top_n": 8,
+  "send_chart_top_n": 5,
+  "min_avg_value_TL": 5000000,
+  "early_score_threshold": 68,
+  "period_daily": "1y",
+  "period_hourly": "60d",
+  "index_symbol": "XU100.IS",
+  "symbols_file": "symbols_bist.txt",
+  "sleep_between_symbols_sec": 0.05
+}
