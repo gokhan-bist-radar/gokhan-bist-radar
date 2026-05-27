@@ -1,6 +1,6 @@
 {
-  "telegram_bot_token": "BURAYA_TELEGRAM_BOT_TOKEN",
-  "telegram_chat_id": "BURAYA_CHAT_ID",
+  "telegram_bot_token": "8606697647:AAH0Qo1_a94a2Kd1Pn45QpEnw1tsTimmBuk",
+  "telegram_chat_id": "8132984888",
   "top_n": 8,
   "send_chart_top_n": 5,
   "min_avg_value_TL": 5000000,
