@@ -1,6 +1,6 @@
 {
-  "telegram_bot_token": "8606697647:AAH0Qo1_a94a2Kd1Pn45QpEnw1tsTimmBuk",
-  "telegram_chat_id": "8132984888",
+  "telegram_bot_token": "BURAYA_TELEGRAM_BOT_TOKEN",
+  "telegram_chat_id": "BURAYA_CHAT_ID",
   "symbols_file": "symbols_bist.txt",
   "index_symbol": "XU100.IS",
   "top_n": 10,

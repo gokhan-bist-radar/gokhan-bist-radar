@@ -14,3 +14,10 @@ GÖKHAN BIST RADAR V9 MOBILE
 - Takas verisi otomatik çekilmez. manual_takas.csv dosyasına güvenilir kaynaktan gelen takas değerleri girilirse skora dahil edilir.
 - Ücretsiz fiyat verisi yfinance üzerinden gelir; gecikme/eksik veri olabilir.
 - Bu sistem yatırım tavsiyesi değildir.
+
+
+V9.1 DÜZELTME:
+- Veri gelen 0 sorununu çözmek için 15M veri gelmediğinde hisse elenmiyor.
+- 15M yoksa 1H/4H/1D ile taramaya devam eder.
+- Telegram özetinde hangi zaman dilimi verisi geldiği görünür.
+- Grafik gönderimi sadece mevcut zaman dilimleri için yapılır.
