@@ -1,32 +1,16 @@
-GÖKHAN BIST RADAR V8 TELEGRAM
+GÖKHAN BIST RADAR V9 MOBILE
 
-Bu sürüm aynı Wi-Fi istemez. Program PC, VPS veya GitHub Actions üzerinde çalışır; tarama bitince Telegram'a özet mesaj ve grafik yollar.
+İstenen ana özellikler:
+1) Geniş BIST listesi taranır.
+2) EMA8/21/50, OBV, MACD, RSI ile kısa vadede patlama adayı aranır.
+3) Grafikler ayrı ayrı 15M, 1H, 4H, 1D olarak Telegram'a gider.
+4) 15 dakikalık grafikte güçlü para girişi varsa trend tabanlı Fibonacci uzantıları çizilir.
+5) Takas analizi manual_takas.csv üzerinden skora dahil edilir.
+6) GitHub Actions ile yarım saatte bir otomatik çalışır.
+7) Gerçek güçlü para girişi skoru: OBV + CMF + MFI + yeşil hacim + MACD histogram bileşimidir.
+8) Mobil kullanım Telegram üzerinden yapılır.
 
-NE YAPAR?
-- BIST listesini tarar.
-- 1 saatlik, 4 saatlik ve günlük zamanı birlikte değerlendirir.
-- “Gidenleri” değil, “gitmek üzere olanları” bulmaya odaklanır.
-- EMA8/21/50, RSI, MACD, OBV, hacim, sıkışma, dirence yakınlık ve RSI uyumsuzluğu kullanır.
-- Telegram'a önce puanlı özet mesaj yollar.
-- En iyi adaylar için 1H + 4H + 1D grafik gönderir.
-- Grafiklerde fiyat/EMA, RSI, MACD ve OBV panelleri vardır.
-
-KURULUM
-1) Python kur.
-2) install.bat çalıştır.
-3) Telegram bot oluştur:
-   - Telegram'da @BotFather
-   - /newbot
-   - Token al.
-4) Chat ID bul:
-   - Botuna “merhaba” yaz.
-   - Tarayıcıda aç:
-     https://api.telegram.org/botTOKEN/getUpdates
-   - chat id değerini al.
-5) config.json dosyasına token ve chat_id yaz.
-6) run_v8_once.bat çalıştır.
-
-SÜREKLİ ÇALIŞMA
-- PC açık kalacaksa: run_v8_loop_hourly.bat
-- VPS/cloud varsa aynı dosyayı kullanabilirsin.
-- GitHub Actions örneği .github/workflows/bist-radar.yml içinde var.
+ÖNEMLİ:
+- Takas verisi otomatik çekilmez. manual_takas.csv dosyasına güvenilir kaynaktan gelen takas değerleri girilirse skora dahil edilir.
+- Ücretsiz fiyat verisi yfinance üzerinden gelir; gecikme/eksik veri olabilir.
+- Bu sistem yatırım tavsiyesi değildir.
