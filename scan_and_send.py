@@ -163,7 +163,70 @@ def score_symbol(symbol):
     if c["close"] > c["ema200"]:
         score += 5
         reasons.append("Günlük EMA200 üstü")
+    # ===== YENİ PATLAMA FİLTRELERİ =====
 
+    # RSI yeni güçleniyor
+    if 55 < a["rsi"] < 72:
+        score += 10
+        reasons.append("RSI sağlıklı güçleniyor")
+
+    # Aşırı şişmiş RSI cezası
+    if a["rsi"] > 85:
+        score -= 15
+        reasons.append("RSI aşırı şişmiş")
+
+    # Yeni EMA kırılımı
+    if (
+        ap["close"] < ap["ema21"]
+        and a["close"] > a["ema21"]
+    ):
+        score += 20
+        reasons.append("EMA21 yeni kırıldı")
+
+    # MACD yeni kesişim
+    if (
+        ap["macd"] < ap["macd_signal"]
+        and a["macd"] > a["macd_signal"]
+    ):
+        score += 20
+        reasons.append("MACD yeni AL verdi")
+
+    # Hacim ivmesi
+    if a["rvol"] > 2.5:
+        score += 15
+        reasons.append("Hacim ivmesi çok güçlü")
+
+    # OBV sıçrama
+    if (
+        a["obv"] > a["obv_ma10"] * 1.02
+    ):
+        score += 10
+        reasons.append("OBV para girişi güçlü")
+
+    # Bollinger sıkışma sonrası genişleme
+    bb_width_now = (
+        d15["high"].rolling(20).mean().iloc[-1]
+        - d15["low"].rolling(20).mean().iloc[-1]
+    )
+
+    bb_width_old = (
+        d15["high"].rolling(20).mean().iloc[-5]
+        - d15["low"].rolling(20).mean().iloc[-5]
+    )
+
+    if bb_width_now > bb_width_old * 1.2:
+        score += 10
+        reasons.append("Sıkışma sonrası genişleme")
+
+    # Günlük trend desteği
+    if c["ema21"] > c["ema50"]:
+        score += 10
+        reasons.append("Günlük trend güçlü")
+
+    # Çok düşmüş tahtaları ele
+    if a["close"] < a["ema200"]:
+        score -= 20
+        reasons.append("Uzun vadeli trend zayıf")
     return {
         "symbol": symbol,
         "score": score,
