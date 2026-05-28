@@ -78,7 +78,7 @@ def process_message(text):
 
         for file_path in files:
             send_photo(file_path)
-
+            send_message(str(files))
         send_message(f"{symbol} analiz tamamlandı.")
 
     except Exception as e:
