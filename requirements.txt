@@ -2,3 +2,12 @@ pandas
 numpy
 yfinance
 matplotlib
+mplfinance
+requests
+beautifulsoup4
+lxml
+ta
+pandas_ta
+python-telegram-bot
+schedule
+pytz
