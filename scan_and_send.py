@@ -55,7 +55,7 @@ for symbol in symbols:
             skor += 25
         if hacim > hacim_ort * 1.5:
             skor += 25
-        if skor >= 60:
+        if skor >= 0:
             mesaj = f"""
 🚀 GÜÇLÜ TARAMA
 Hisse: {symbol}
