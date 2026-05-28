@@ -3,8 +3,8 @@ import pandas as pd
 import ta
 import requests
 import time
-BOT_TOKEN = "BURAYA_BOT_TOKEN"
-CHAT_ID = "BURAYA_CHAT_ID"
+BOT_TOKEN = "8606697647:AAH0Qo1_a94a2Kd1Pn45QpEnw1tsTimmBuk"
+CHAT_ID = "8132984888"
 symbols = [
     "THYAO.IS",
     "ASELS.IS",
