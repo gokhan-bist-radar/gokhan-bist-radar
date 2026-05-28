@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 import matplotlib.pyplot as plt
-
+from chart_engine import create_all_charts
 
 OUT = Path("outputs")
 CHARTS = OUT / "charts"
