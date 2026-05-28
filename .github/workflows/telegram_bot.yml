@@ -1,0 +1,28 @@
+name: GOKHAN_BIST_RADAR_PRO
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "*/30 * * * *"
+
+jobs:
+  scan-and-send:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repo indir
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Kütüphaneleri yükle
+        run: |
+          pip install -r requirements.txt
+
+      - name: Otomatik tarama çalıştır
+        run: |
+          python scan_and_send.py
