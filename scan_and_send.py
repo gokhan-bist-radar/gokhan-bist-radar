@@ -5,8 +5,8 @@ import traceback
 from chart_engine import create_all_charts
 
 
-BOT_TOKEN = os.getenv("BOT_TOKEN", "BURAYA_BOT_TOKEN")
-CHAT_ID = os.getenv("CHAT_ID", "BURAYA_CHAT_ID")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8606697647:AAH0Qo1_a94a2Kd1Pn45QpEnw1tsTimmBuk")
+CHAT_ID = os.getenv("CHAT_ID", "8132984888")
 
 BASE_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
