@@ -260,7 +260,8 @@ def main():
 
         results = sorted(results, key=lambda x: x["score"], reverse=True)
         adaylar = results[:MAX_ADAY]
-
+        save_signals_to_csv(adaylar)
+        
         if not adaylar:
             send_message("Tarama tamamlandı ancak uygun aday bulunamadı.")
             return
