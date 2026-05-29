@@ -23,6 +23,18 @@ def send_message(text):
     )
     print("TELEGRAM:", r.status_code, r.text[:300])
 
+def send_photo(path):
+    with open(path, "rb") as photo:
+        r = requests.post(
+            f"{BASE_URL}/sendPhoto",
+            data={"chat_id": CHAT_ID},
+            files={"photo": photo},
+            timeout=90
+        )
+    print("TELEGRAM PHOTO:", r.status_code, r.text[:200])
+    except Exception:
+        send_message(traceback.format_exc())=
+
 def save_signals_to_csv(adaylar):
     filename = "signals_history.csv"
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -305,31 +317,20 @@ def main():
        send_message(msg)
 
        send_message("İlk 3 aday için grafikler hazırlanıyor...")
-
-       for a in adaylar[:3]:
+        for a in adaylar[:3]:
        symbol = a["symbol"]
        send_message(f"{symbol} grafikleri hazırlanıyor...")
 
-       files = create_all_charts(symbol)
+    files = create_all_charts(symbol)
 
        for file_path in files:
         send_photo(file_path)
 
        send_message(f"{symbol} grafik gönderimi tamamlandı.")
 
-       send_message("Tarama tamamlandı.")
+    send_message("Tarama tamamlandı.")
 
-def send_photo(path):
-    with open(path, "rb") as photo:
-        r = requests.post(
-            f"{BASE_URL}/sendPhoto",
-            data={"chat_id": CHAT_ID},
-            files={"photo": photo},
-            timeout=90
-        )
-    print("TELEGRAM PHOTO:", r.status_code, r.text[:200])
-    except Exception:
-        send_message(traceback.format_exc())
+
 
 
 if __name__ == "__main__":
