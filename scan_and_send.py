@@ -22,6 +22,32 @@ def send_message(text):
     )
     print("TELEGRAM:", r.status_code, r.text[:300])
 
+def save_signals_to_csv(adaylar):
+    filename = "signals_history.csv"
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    rows = []
+
+    for a in adaylar:
+        rows.append({
+            "datetime": now,
+            "symbol": a["symbol"],
+            "score": a["score"],
+            "price": a["price"],
+            "rsi": a["rsi"],
+            "rvol": a["rvol"],
+            "reasons": " | ".join(a["reasons"])
+        })
+
+    df_new = pd.DataFrame(rows)
+
+    if os.path.exists(filename):
+        df_old = pd.read_csv(filename)
+        df_all = pd.concat([df_old, df_new], ignore_index=True)
+    else:
+        df_all = df_new
+
+    df_all.to_csv(filename, index=False)
 
 def read_symbols():
     with open("symbols_bist.txt", "r", encoding="utf-8") as f:
