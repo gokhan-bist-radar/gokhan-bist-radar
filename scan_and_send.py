@@ -11,7 +11,7 @@ import numpy as np
 from chart_engine import create_all_charts
 
 
-BOT_TOKEN = "8606697647:AAH0Qo1_a94a2Kd1Pn45QpEnw1tsTimmBuk"
+BOT_TOKEN = "8877604312:AAHFyEKBvy2BsiFZkiZiW9mkuiG3jS9SLyY"
 CHAT_ID = "8132984888"
 
 BASE_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
