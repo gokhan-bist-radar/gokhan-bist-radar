@@ -304,20 +304,20 @@ def main():
 
        send_message(msg)
 
-send_message("İlk 3 aday için grafikler hazırlanıyor...")
+       send_message("İlk 3 aday için grafikler hazırlanıyor...")
 
-for a in adaylar[:3]:
-    symbol = a["symbol"]
-    send_message(f"{symbol} grafikleri hazırlanıyor...")
+       for a in adaylar[:3]:
+       symbol = a["symbol"]
+       send_message(f"{symbol} grafikleri hazırlanıyor...")
 
-    files = create_all_charts(symbol)
+       files = create_all_charts(symbol)
 
-    for file_path in files:
+       for file_path in files:
         send_photo(file_path)
 
-    send_message(f"{symbol} grafik gönderimi tamamlandı.")
+       send_message(f"{symbol} grafik gönderimi tamamlandı.")
 
-send_message("Tarama tamamlandı.")
+       send_message("Tarama tamamlandı.")
 
 def send_photo(path):
     with open(path, "rb") as photo:
