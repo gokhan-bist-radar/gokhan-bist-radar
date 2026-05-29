@@ -5,6 +5,7 @@ import requests
 import yfinance as yf
 import pandas as pd
 import numpy as np
+from datetime import datetime
 
 BOT_TOKEN = "8606697647:AAH0Qo1_a94a2Kd1Pn45QpEnw1tsTimmBuk"
 CHAT_ID = "8132984888"
