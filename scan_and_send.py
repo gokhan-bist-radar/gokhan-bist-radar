@@ -6,6 +6,7 @@ import yfinance as yf
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from chart_engine import create_all_charts
 
 BOT_TOKEN = "8606697647:AAH0Qo1_a94a2Kd1Pn45QpEnw1tsTimmBuk"
 CHAT_ID = "8132984888"
@@ -304,6 +305,15 @@ def main():
         send_message(msg)
         send_message("Tarama tamamlandı.")
 
+def send_photo(path):
+    with open(path, "rb") as photo:
+        r = requests.post(
+            f"{BASE_URL}/sendPhoto",
+            data={"chat_id": CHAT_ID},
+            files={"photo": photo},
+            timeout=90
+        )
+    print("TELEGRAM PHOTO:", r.status_code, r.text[:200])
     except Exception:
         send_message(traceback.format_exc())
 
