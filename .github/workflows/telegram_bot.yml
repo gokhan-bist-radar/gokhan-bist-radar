@@ -26,4 +26,4 @@ jobs:
 
       - name: Otomatik tarama çalıştır
         run: |
-          python bist_telegram_radar_v10_3.py
+          python bist_telegram_radar_v10_4.py
