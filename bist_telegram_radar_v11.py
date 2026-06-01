@@ -1143,6 +1143,7 @@ def main():
     mkt_bonus, mkt_state = market_bonus(idx)
 
     results = []
+    fallback = []
 
     for i, s in enumerate(symbols, start=1):
         print(f"[{i}/{len(symbols)}] {s}")
