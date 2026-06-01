@@ -1300,14 +1300,14 @@ def main():
         pd.DataFrame(errors).to_csv(OUT / "errors_v11.csv", index=False, encoding="utf-8-sig")
 
     summary = (
-        f"📡 <b>Gökhan BIST Radar V11</b>\n"
-        f"Tarih: {started}\n"
-        f"Piyasa: <b>{mkt_state}</b>\
-        f"Taranan: {len(symbols)} | Aday havuzu: {len(results)} | Sıkı filtre: {len(fallback)}\n"
-        f"V11 filtre: Para + Kırılım + R/R + Fib/Uyumsuzluk + RS XU100 + negatif uyumsuzluk elemesi\n"
-        f"Aday sayısı: <b>{len(top)}</b>\n\n"
-        f"İlk adaylar:\n"
-    )
+    f"📡 <b>Gökhan BIST Radar V11</b>\n"
+    f"Tarih: {started}\n"
+    f"Piyasa: <b>{mkt_state}</b>\n"
+    f"Taranan: {len(symbols)} | Aday havuzu: {len(results)} | Sıkı filtre: {len(fallback)}\n"
+    f"V11 filtre: Para + Kırılım + R/R + Fib/Uyumsuzluk + RS XU100 + negatif uyumsuzluk elemesi\n"
+    f"Aday sayısı: <b>{len(top)}</b>\n\n"
+    f"İlk adaylar:\n"
+)
 
     for r in top[:10]:
         summary += (
