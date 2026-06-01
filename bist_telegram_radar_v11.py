@@ -1122,6 +1122,10 @@ def main():
         print(f"[{i}/{len(symbols)}] {s}")
         try:
             r = analyze_symbol(s, cfg, mkt_bonus, takas_map, idx)
+            if r is None:
+                print(f"DEBUG NONE: {s}")
+            else:
+                print(f"DEBUG OK: {s} score={r.get('score')}")
             if r:
                 results.append(r)
         except Exception as e:
