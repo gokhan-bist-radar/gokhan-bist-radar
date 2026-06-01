@@ -113,19 +113,42 @@ def cmf(df, n=20):
 
 
 def download(symbol, period, interval):
-    df = yf.download(symbol, period=period, interval=interval, progress=False, auto_adjust=False, 
-    
-    print(f"DEBUG COLUMNS {symbol}: {list(df.columns)}")
-    
-    if df is None or df.empty:
-        return None
-    if isinstance(df.columns, pd.MultiIndex):
-        df.columns = [c[0] for c in df.columns]
-    df = df.dropna().copy()
-    for c in ["Open", "High", "Low", "Close", "Volume"]:
-        if c not in df.columns:
+    try:
+        df = yf.download(
+            symbol,
+            period=period,
+            interval=interval,
+            progress=False,
+            auto_adjust=False
+        )
+
+        print(f"DEBUG {symbol} -> columns={list(df.columns) if df is not None else 'NONE'}")
+
+        if df is None or df.empty:
+            print(f"DEBUG EMPTY: {symbol}")
             return None
-    return df
+
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = [c[0] for c in df.columns]
+
+        print(f"DEBUG FIXED {symbol} -> columns={list(df.columns)}")
+
+        df = df.dropna().copy()
+
+        required = ["Open", "High", "Low", "Close", "Volume"]
+
+        for c in required:
+            if c not in df.columns:
+                print(f"DEBUG MISSING COLUMN {symbol}: {c}")
+                return None
+
+        print(f"DEBUG OK DATA {symbol}: rows={len(df)}")
+
+        return df
+
+    except Exception as e:
+        print(f"DEBUG DOWNLOAD ERROR {symbol}: {e}")
+        return None
 
 
 def resample_intraday(df, rule):
