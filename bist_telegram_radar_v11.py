@@ -113,7 +113,10 @@ def cmf(df, n=20):
 
 
 def download(symbol, period, interval):
-    df = yf.download(symbol, period=period, interval=interval, progress=False, auto_adjust=False, threads=False)
+    df = yf.download(symbol, period=period, interval=interval, progress=False, auto_adjust=False, 
+    
+    print(f"DEBUG COLUMNS {symbol}: {list(df.columns)}")
+    
     if df is None or df.empty:
         return None
     if isinstance(df.columns, pd.MultiIndex):
