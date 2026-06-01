@@ -1284,7 +1284,7 @@ def main():
                 r["quality_grade"] = "C-SADECE İZLE"
                 fallback.append(r)
 
-        selected = fallback[:3]
+        selected = fallback[:3] if fallback else results[:3]
     top = selected[:cfg["top_n"]]
 
     clean = [{k: v for k, v in r.items() if k != "_frames"} for r in results]
@@ -1302,8 +1302,8 @@ def main():
     summary = (
         f"📡 <b>Gökhan BIST Radar V11</b>\n"
         f"Tarih: {started}\n"
-        f"Piyasa: <b>{mkt_state}</b>\n"
-        f"Taranan: {len(symbols)} | Veri gelen: {len(results)}\n"
+        f"Piyasa: <b>{mkt_state}</b>\
+        f"Taranan: {len(symbols)} | Aday havuzu: {len(results)} | Sıkı filtre: {len(fallback)}\n"
         f"V11 filtre: Para + Kırılım + R/R + Fib/Uyumsuzluk + RS XU100 + negatif uyumsuzluk elemesi\n"
         f"Aday sayısı: <b>{len(top)}</b>\n\n"
         f"İlk adaylar:\n"
