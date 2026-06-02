@@ -1059,12 +1059,22 @@ def tg_url(token, method):
 
 
 def telegram_send_message(token, chat_id, text):
-    import urllib.error
+    import requests
 
-    data = urllib.parse.urlencode({
+    url = f"https://api.telegram.org/bot{str(token).strip()}/sendMessage"
+
+    payload = {
         "chat_id": str(chat_id).strip(),
-        "text": str(text)[:3000]
-    }).encode("utf-8")
+        "text": str(text)[:3900]
+    }
+
+    r = requests.post(url, data=payload, timeout=30)
+
+    print("TELEGRAM STATUS:", r.status_code)
+    print("TELEGRAM RESPONSE:", r.text)
+
+    r.raise_for_status()
+    return r.text
 
     try:
         with urllib.request.urlopen(tg_url(str(token).strip(), "sendMessage"), data=data, timeout=30) as resp:
