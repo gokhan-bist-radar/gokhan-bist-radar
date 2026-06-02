@@ -11,6 +11,10 @@ jobs:
   scan-and-send:
     runs-on: ubuntu-latest
 
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
     steps:
       - name: Repo indir
         uses: actions/checkout@v4
@@ -23,6 +27,18 @@ jobs:
       - name: Kütüphaneleri yükle
         run: |
           pip install -r requirements.txt
+
+      - name: Secret kontrol
+        run: |
+          python - <<'PY'
+          import os
+          t = os.getenv("TELEGRAM_BOT_TOKEN")
+          c = os.getenv("TELEGRAM_CHAT_ID")
+          print("TOKEN VAR MI:", bool(t))
+          print("TOKEN UZUNLUK:", len(t or ""))
+          print("CHAT_ID VAR MI:", bool(c))
+          print("CHAT_ID:", c)
+          PY
 
       - name: Otomatik tarama çalıştır
         run: |
