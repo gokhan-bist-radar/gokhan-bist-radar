@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-GOKHAN_BIST_RADAR_PRO_V11
+GOKHAN_BIST_RADAR_PRO_V12
 
 V9.1 üzerine temiz revizyon:
 - Mevcut çalışan yapı korunmuştur:
@@ -1170,6 +1170,21 @@ def main():
         Sahte kırılımları elemek için negatif uyumsuzluk + RS XU100 + R/R birlikte değerlendirilir.
         """
         score = r.get("score", 0)
+        
+        rs20 = r.get("rs_xu100_20") or 0
+rs60 = r.get("rs_xu100_60") or 0
+
+if rs20 >= 15:
+    score += 15
+
+if rs20 >= 25:
+    score += 10
+
+if rs60 >= 10:
+    score += 15
+
+if rs60 >= 20:
+    score += 10
 
         money15 = r.get("money_flow_15m") or 0
         money1h = r.get("money_flow_1h") or 0
