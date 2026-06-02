@@ -1164,6 +1164,7 @@ def main():
         time.sleep(cfg.get("sleep_between_symbols_sec", 0.03))
 
     results = sorted(results, key=lambda x: x["score"], reverse=True)
+    
     def quality_filter(r):
         """
         V11 kalite filtresi:
@@ -1175,16 +1176,16 @@ def main():
         rs60 = r.get("rs_xu100_60") or 0
 
         if rs20 >= 15:
-        score += 15
+            score += 15
 
         if rs20 >= 25:
-        score += 10
+            score += 10
 
         if rs60 >= 10:
-        score += 15
+            score += 15
 
         if rs60 >= 20:
-        score += 10
+            score += 10
 
         money15 = r.get("money_flow_15m") or 0
         money1h = r.get("money_flow_1h") or 0
