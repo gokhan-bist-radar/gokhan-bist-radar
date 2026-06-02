@@ -1351,7 +1351,7 @@ def main():
     f"Tarih: {started}\n"
     f"Piyasa: <b>{mkt_state}</b>\n"
     f"Taranan: {len(symbols)} | Aday havuzu: {len(results)} | Sıkı filtre: {len(fallback)}\n"
-    f"V11 filtre: Para + Kırılım + R/R + Fib/Uyumsuzluk + RS XU100 + negatif uyumsuzluk elemesi\n"
+    f"V12 filtre: Para + Kırılım + R/R + Fib/Uyumsuzluk + RS XU100 + negatif uyumsuzluk elemesi\n"
     f"Aday sayısı: <b>{len(top)}</b>\n\n"
     f"İlk adaylar:\n"
 )
