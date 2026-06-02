@@ -1059,13 +1059,20 @@ def tg_url(token, method):
 
 
 def telegram_send_message(token, chat_id, text):
+    import urllib.error
+
     data = urllib.parse.urlencode({
         "chat_id": str(chat_id).strip(),
-        "text": str(text)[:3900]
+        "text": str(text)[:3000]
     }).encode("utf-8")
 
-    with urllib.request.urlopen(tg_url(str(token).strip(), "sendMessage"), data=data, timeout=30) as resp:
-        return resp.read().decode("utf-8")
+    try:
+        with urllib.request.urlopen(tg_url(str(token).strip(), "sendMessage"), data=data, timeout=30) as resp:
+            return resp.read().decode("utf-8")
+    except urllib.error.HTTPError as e:
+        print("TELEGRAM HTTP ERROR:", e.code)
+        print("TELEGRAM ERROR BODY:", e.read().decode("utf-8", errors="ignore"))
+        raise
 
 
 def telegram_send_photo(token, chat_id, photo_path, caption):
