@@ -1060,12 +1060,11 @@ def tg_url(token, method):
 
 def telegram_send_message(token, chat_id, text):
     data = urllib.parse.urlencode({
-        "chat_id": chat_id,
-        "text": text,
-        "parse_mode": "HTML"
-    }).encode()
+        "chat_id": str(chat_id).strip(),
+        "text": str(text)[:3900]
+    }).encode("utf-8")
 
-    with urllib.request.urlopen(tg_url(token, "sendMessage"), data=data, timeout=30) as resp:
+    with urllib.request.urlopen(tg_url(str(token).strip(), "sendMessage"), data=data, timeout=30) as resp:
         return resp.read().decode("utf-8")
 
 
