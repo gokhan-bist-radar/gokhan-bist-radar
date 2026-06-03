@@ -7,7 +7,7 @@ import traceback
 import urllib.parse
 import urllib.request
 from pathlib import Path
-
+from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -589,7 +589,7 @@ def main():
         print("Telegram token/chat_id ayarlanmamış.")
         return
 
-    started = dt.datetime.now().strftime("%d.%m.%Y %H:%M")
+    started = dt.datetime.now(ZoneInfo("Europe/Istanbul")).strftime("%d.%m.%Y %H:%M")
     symbols = load_symbols(cfg["symbols_file"])
     takas_map = load_takas()
     errors = []
