@@ -2,8 +2,6 @@ name: Gokhan BIST Radar V8
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '10 7-15 * * 1-5'
 
 jobs:
   run-radar:
