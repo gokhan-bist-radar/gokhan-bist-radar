@@ -1365,11 +1365,12 @@ def main():
 
     telegram_send_message(token, chat_id, summary)
 
-    for r in top[:cfg["send_chart_top_n"]]:
-        for tf in ["15M", "1H", "4H", "1D"]:
-            if tf in r.get("_frames", {}):
-                p = plot_timeframe_chart(r, tf, cfg)
-                telegram_send_photo(token, chat_id, p, caption(r, tf))
+    # Grafik gönderimi kapatıldı
+# for r in top[:cfg["send_chart_top_n"]]:
+#     for tf in ["15M", "1H", "4H", "1D"]:
+#         if tf in r.get("_frames", {}):
+#             p = plot_timeframe_chart(r, tf)
+#             telegram_send_photo(token, chat_id, p)
 
     print("Bitti. Telegram mesajları gönderildi.")
     print("CSV:", OUT / "telegram_candidates_v11.csv")
