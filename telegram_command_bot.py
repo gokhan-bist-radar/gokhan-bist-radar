@@ -62,21 +62,7 @@ def get_updates():
 
 
 def handle_symbol(symbol):
-    send_message(f"{symbol} grafik hazırlanıyor...")
-
-    files = create_all_charts(symbol)
-
-    send_message(f"Oluşan dosyalar: {files}")
-
-    if not files:
-        send_message("Grafik oluşturulamadı.")
-        return
-
-    for file_path in files:
-        send_message(f"Gönderiliyor: {file_path}")
-        send_photo(file_path)
-
-    send_message(f"{symbol} analiz tamamlandı.")
+    send_message(f"{symbol} komutu alındı. Grafik üretimi kapalı.")
 
 
 def main():
