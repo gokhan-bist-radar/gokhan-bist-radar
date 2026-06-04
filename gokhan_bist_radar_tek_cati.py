@@ -1347,7 +1347,7 @@ def main():
         pd.DataFrame(errors).to_csv(OUT / "errors_v11.csv", index=False, encoding="utf-8-sig")
 
     summary = (
-    f"📡 <b>Gökhan BIST Radar V11</b>\n"
+    f"📡 SANAL GÖKHAN BİST RADAR \n"
     f"Tarih: {started}\n"
     f"Piyasa: <b>{mkt_state}</b>\n"
     f"Taranan: {len(symbols)} | Aday havuzu: {len(results)} | Sıkı filtre: {len(fallback)}\n"
