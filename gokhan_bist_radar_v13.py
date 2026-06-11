@@ -1416,7 +1416,8 @@ def main():
     f"Piyasa: <b>{mkt_state}</b>\n"
     f"Taranan: {len(symbols)} | Aday havuzu: {len(results)} | V13 aday: {len(top)}\n\n"
 )
-)summary += "🟦 <b>V9 ERKEN RADAR</b>\n"
+
+summary += "🟦 <b>V9 ERKEN RADAR</b>\n"
 for r in v9_top[:10]:
     summary += (
         f"• {r['symbol']} skor {r.get('score')} | "
