@@ -30,3 +30,11 @@ jobs:
       - name: Tek çatı radar çalıştır
         run: |
           python gokhan_bist_radar_v13.py
+
+      - name: Radar hafızasını kaydet
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add radar_memory.csv
+          git commit -m "Update radar memory" || echo "No memory changes"
+          git push
