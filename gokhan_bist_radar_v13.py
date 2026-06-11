@@ -1417,6 +1417,8 @@ def main():
             f"R/R {r['risk_reward']} | {r.get('available_tfs','')} | {r['setup']}\n"
         )
     summary += format_memory_leaders()
+    print("MEMORY SAVE:", len(top))
+    save_radar_memory(started, "V13", top)
     save_radar_memory(started, "V13", top)
     telegram_send_message(token, chat_id, summary)
 
