@@ -1410,21 +1410,21 @@ def main():
     if errors:
         pd.DataFrame(errors).to_csv(OUT / "errors_v11.csv", index=False, encoding="utf-8-sig")
 
-    summary = (
-    f"📡 <b>GÖKHAN BIST RADAR PRO</b>\n"
-    f"Tarih: {started}\n"
-    f"Piyasa: <b>{mkt_state}</b>\n"
-    f"Taranan: {len(symbols)} | Aday havuzu: {len(results)} | V13 aday: {len(top)}\n\n"
-)
-
-summary += "🟦 <b>V9 ERKEN RADAR</b>\n"
-for r in v9_top[:10]:
-    summary += (
-        f"• {r['symbol']} skor {r.get('score')} | "
-        f"para15m {r.get('money_flow_15m') or r.get('para15m') or 0} | "
-        f"{','.join(r.get('_frames', {}).keys())} | "
-        f"{r.get('reasons','')}\n"
+        summary = (
+        f"📡 <b>GÖKHAN BIST RADAR PRO</b>\n"
+        f"Tarih: {started}\n"
+        f"Piyasa: <b>{mkt_state}</b>\n"
+        f"Taranan: {len(symbols)} | Aday havuzu: {len(results)} | V13 aday: {len(top)}\n\n"
     )
+
+    summary += "🟦 <b>V9 ERKEN RADAR</b>\n"
+    for r in v9_top[:10]:
+        summary += (
+            f"• {r['symbol']} skor {r.get('score')} | "
+            f"para15m {r.get('money_flow_15m') or r.get('para15m') or 0} | "
+            f"{','.join(r.get('_frames', {}).keys())} | "
+            f"{r.get('reasons','')}\n"
+        )
 
 summary += "\n🟩 <b>V13 KALİTE RADAR</b>\n"
 for r in top[:10]:
