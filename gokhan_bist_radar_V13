@@ -26,7 +26,9 @@ from zoneinfo import ZoneInfo
 import urllib.parse
 import urllib.request
 from pathlib import Path
-
+import csv
+from pathlib import Path
+from collections import Counter
 import numpy as np
 import pandas as pd
 import yfinance as yf
@@ -37,7 +39,7 @@ OUT = Path("outputs")
 CHARTS = OUT / "charts"
 OUT.mkdir(exist_ok=True)
 CHARTS.mkdir(exist_ok=True)
-
+MEMORY_FILE = Path("radar_memory.csv")
 
 # ============================================================
 # CONFIG / SYMBOL
@@ -1138,6 +1140,58 @@ def caption(r, tf):
 # ============================================================
 # MAIN
 # ============================================================
+def load_radar_memory(days=10):
+    rows = []
+    if not MEMORY_FILE.exists():
+        return rows
+
+    try:
+        with open(MEMORY_FILE, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            rows = list(reader)
+    except Exception:
+        return []
+
+    return rows[-1000:]
+
+
+def save_radar_memory(started, radar_name, top):
+    old_rows = load_radar_memory()
+
+    new_rows = []
+    for r in top:
+        new_rows.append({
+            "date": started,
+            "radar": radar_name,
+            "symbol": str(r.get("symbol", "")),
+            "score": str(r.get("score", "")),
+            "para15m": str(r.get("para15m", r.get("money_15m", ""))),
+        })
+
+    rows = old_rows + new_rows
+
+    with open(MEMORY_FILE, "w", encoding="utf-8", newline="") as f:
+        fieldnames = ["date", "radar", "symbol", "score", "para15m"]
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows[-1500:])
+
+
+def radar_memory_counts():
+    rows = load_radar_memory()
+    symbols = [r.get("symbol", "") for r in rows if r.get("symbol")]
+    return Counter(symbols)
+
+
+def format_memory_leaders(limit=10):
+    counts = radar_memory_counts()
+    if not counts:
+        return "\n🧠 Radar Hafızası: Henüz veri yok.\n"
+
+    text = "\n🧠 <b>Son Radar Hafızası</b>\n"
+    for sym, cnt in counts.most_common(limit):
+        text += f"• {sym}: {cnt} kez\n"
+    return text
 
 def main():
     cfg = load_config()
@@ -1362,7 +1416,8 @@ def main():
             f"RS20 {r.get('rs_xu100_20')} | kırılım {r['breakout_level']} | fib1.618 {r['fib_1618']} | "
             f"R/R {r['risk_reward']} | {r.get('available_tfs','')} | {r['setup']}\n"
         )
-
+summary += format_memory_leaders()
+save_radar_memory(started, "V13", top)
     telegram_send_message(token, chat_id, summary)
 
     # Grafik gönderimi kapatıldı
