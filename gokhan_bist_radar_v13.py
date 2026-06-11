@@ -1179,6 +1179,7 @@ def save_radar_memory(started, radar_name, top):
 print("MEMORY FILE EXISTS:", os.path.exists("radar_memory.csv"))
 def radar_memory_counts():
     rows = load_radar_memory()
+    print("MEMORY ROWS:", len(rows))
     symbols = [r.get("symbol", "") for r in rows if r.get("symbol")]
     return Counter(symbols)
 
@@ -1418,7 +1419,6 @@ def main():
         )
     summary += format_memory_leaders()
     print("MEMORY SAVE:", len(top))
-    save_radar_memory(started, "V13", top)
     save_radar_memory(started, "V13", top)
     telegram_send_message(token, chat_id, summary)
 
