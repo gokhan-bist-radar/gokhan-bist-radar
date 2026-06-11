@@ -1427,7 +1427,6 @@ def main():
         )
 
 summary += "\n🟩 <b>V13 KALİTE RADAR</b>\n"
-for r in top[:10]:
     summary += (
         f"• {r['symbol']} skor {r.get('score')} | "
         f"{r.get('quality_grade','')} | "
