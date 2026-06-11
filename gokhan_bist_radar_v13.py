@@ -1450,13 +1450,6 @@ def main():
             summary += f"• {sym} → V9 + V13 kesişimi\n"
     else:
         summary += "• Kesişim yok.\n"
-
-    for r in top[:10]:
-        summary += (
-            f"• {r['symbol']} skor {r['score']} | {r.get('quality_grade','')} | para15m {r['money_flow_15m']} | "
-            f"RS20 {r.get('rs_xu100_20')} | kırılım {r['breakout_level']} | fib1.618 {r['fib_1618']} | "
-            f"R/R {r['risk_reward']} | {r.get('available_tfs','')} | {r['setup']}\n"
-        )
     
     save_radar_memory(started, "V9", v9_top)
     save_radar_memory(started, "V13", top)
