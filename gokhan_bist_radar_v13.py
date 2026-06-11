@@ -1416,8 +1416,8 @@ def main():
             f"RS20 {r.get('rs_xu100_20')} | kırılım {r['breakout_level']} | fib1.618 {r['fib_1618']} | "
             f"R/R {r['risk_reward']} | {r.get('available_tfs','')} | {r['setup']}\n"
         )
-summary += format_memory_leaders()
-save_radar_memory(started, "V13", top)
+    summary += format_memory_leaders()
+    save_radar_memory(started, "V13", top)
     telegram_send_message(token, chat_id, summary)
 
     # Grafik gönderimi kapatıldı
