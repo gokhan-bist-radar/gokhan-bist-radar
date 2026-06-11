@@ -1,0 +1,32 @@
+name: GOKHAN_BIST_RADAR_V13
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15,30,45 7-9 * * 1-5"
+    - cron: "15,30,45 11-14 * * 1-5"
+
+jobs:
+  scan-and-send:
+    runs-on: ubuntu-latest
+
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+    steps:
+      - name: Repo indir
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Kütüphaneleri yükle
+        run: |
+          pip install -r requirements.txt
+
+      - name: Radar V13 çalıştır
+        run: |
+          python gokhan_bist_radar_v13.py
