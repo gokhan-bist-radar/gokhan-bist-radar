@@ -28,4 +28,4 @@ jobs:
 
       - name: Tek çatı radar çalıştır
         run: |
-          python gokhan_bist_radar_tek_cati.py
+          python gokhan_bist_radar_v13.py
