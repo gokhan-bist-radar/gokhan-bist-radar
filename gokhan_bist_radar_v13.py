@@ -1176,7 +1176,7 @@ def save_radar_memory(started, radar_name, top):
         writer.writeheader()
         writer.writerows(rows[-1500:])
 
-
+print("MEMORY FILE EXISTS:", os.path.exists("radar_memory.csv"))
 def radar_memory_counts():
     rows = load_radar_memory()
     symbols = [r.get("symbol", "") for r in rows if r.get("symbol")]
