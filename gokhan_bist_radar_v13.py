@@ -1157,7 +1157,7 @@ def load_radar_memory(days=10):
 
 def save_radar_memory(started, radar_name, top):
     old_rows = load_radar_memory()
-
+    print("MEMORY WRITTEN:", MEMORY_FILE.exists(), MEMORY_FILE.resolve())
     new_rows = []
     for r in top:
         new_rows.append({
