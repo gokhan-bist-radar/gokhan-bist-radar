@@ -1,4 +1,4 @@
-name: Gokhan BIST Radar V8
+name: GOKHAN_BIST_RADAR_V9
 
 on:
   workflow_dispatch:
