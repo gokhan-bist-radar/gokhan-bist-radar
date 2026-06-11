@@ -1348,7 +1348,16 @@ def main():
         r["quality_grade"] = "ELENDİ"
         return False
 
-
+    # V9 ERKEN RADAR: geniş momentum / para akışı listesi
+    v9_top = sorted(
+        results,
+        key=lambda r: (
+            r.get("score", 0),
+            r.get("money_flow_15m") or r.get("para15m") or 0
+        ),
+        reverse=True
+    )[:10]
+    
     selected = [r for r in results if quality_filter(r)]
 
     # Hiç aday çıkmazsa, sadece RS güçlü ve ağır negatif uyumsuzluğu olmayan en iyi 3 izleme adayı.
@@ -1402,14 +1411,44 @@ def main():
         pd.DataFrame(errors).to_csv(OUT / "errors_v11.csv", index=False, encoding="utf-8-sig")
 
     summary = (
-    f"📡 SANAL GÖKHAN BİST RADAR \n"
+    f"📡 <b>GÖKHAN BIST RADAR PRO</b>\n"
     f"Tarih: {started}\n"
     f"Piyasa: <b>{mkt_state}</b>\n"
-    f"Taranan: {len(symbols)} | Aday havuzu: {len(results)} | Sıkı filtre: {len(fallback)}\n"
-    f"V11 filtre: Para + Kırılım + R/R + Fib/Uyumsuzluk + RS XU100 + negatif uyumsuzluk elemesi\n"
-    f"Aday sayısı: <b>{len(top)}</b>\n\n"
-    f"İlk adaylar:\n"
+    f"Taranan: {len(symbols)} | Aday havuzu: {len(results)} | V13 aday: {len(top)}\n\n"
 )
+)summary += "🟦 <b>V9 ERKEN RADAR</b>\n"
+for r in v9_top[:10]:
+    summary += (
+        f"• {r['symbol']} skor {r.get('score')} | "
+        f"para15m {r.get('money_flow_15m') or r.get('para15m') or 0} | "
+        f"{','.join(r.get('_frames', {}).keys())} | "
+        f"{r.get('reasons','')}\n"
+    )
+
+summary += "\n🟩 <b>V13 KALİTE RADAR</b>\n"
+for r in top[:10]:
+    summary += (
+        f"• {r['symbol']} skor {r.get('score')} | "
+        f"{r.get('quality_grade','')} | "
+        f"para15m {r.get('money_flow_15m') or r.get('para15m') or 0} | "
+        f"RS20 {r.get('rs_xu100_20')} | "
+        f"kırılım {r.get('breakout_level')} | "
+        f"fib1.618 {r.get('fib_1618')} | "
+        f"R/R {r.get('risk_reward')} | "
+        f"{','.join(r.get('_frames', {}).keys())} | "
+        f"{r.get('reasons','')}\n"
+    )
+
+v9_symbols = {r.get("symbol") for r in v9_top}
+v13_symbols = {r.get("symbol") for r in top}
+common_symbols = list(v9_symbols & v13_symbols)
+
+summary += "\n🔥 <b>ORTAK RADAR</b>\n"
+if common_symbols:
+    for sym in common_symbols[:10]:
+        summary += f"• {sym} → V9 + V13 kesişimi\n"
+else:
+    summary += "• Kesişim yok.\n"
 
     for r in top[:10]:
         summary += (
@@ -1418,8 +1457,11 @@ def main():
             f"R/R {r['risk_reward']} | {r.get('available_tfs','')} | {r['setup']}\n"
         )
     
+    save_radar_memory(started, "V9", v9_top)
     save_radar_memory(started, "V13", top)
+    
     summary += format_memory_leaders()
+    
     telegram_send_message(token, chat_id, summary)
 
     # Grafik gönderimi kapatıldı
