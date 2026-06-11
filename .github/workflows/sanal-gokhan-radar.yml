@@ -10,6 +10,9 @@ jobs:
   scan-and-send:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     env:
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -35,6 +38,8 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+          git status
+          ls -la
           git add radar_memory.csv
           git commit -m "Update radar memory" || echo "No memory changes"
           git push
