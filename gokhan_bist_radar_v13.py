@@ -1410,7 +1410,7 @@ def main():
     if errors:
         pd.DataFrame(errors).to_csv(OUT / "errors_v11.csv", index=False, encoding="utf-8-sig")
 
-        summary = (
+    summary = (
         f"📡 <b>GÖKHAN BIST RADAR PRO</b>\n"
         f"Tarih: {started}\n"
         f"Piyasa: <b>{mkt_state}</b>\n"
@@ -1426,29 +1426,30 @@ def main():
             f"{r.get('reasons','')}\n"
         )
 
-summary += "\n🟩 <b>V13 KALİTE RADAR</b>\n"
-    summary += (
-        f"• {r['symbol']} skor {r.get('score')} | "
-        f"{r.get('quality_grade','')} | "
-        f"para15m {r.get('money_flow_15m') or r.get('para15m') or 0} | "
-        f"RS20 {r.get('rs_xu100_20')} | "
-        f"kırılım {r.get('breakout_level')} | "
-        f"fib1.618 {r.get('fib_1618')} | "
-        f"R/R {r.get('risk_reward')} | "
-        f"{','.join(r.get('_frames', {}).keys())} | "
-        f"{r.get('reasons','')}\n"
-    )
+    summary += "\n🟩 <b>V13 KALİTE RADAR</b>\n"
+    for r in top[:10]:
+        summary += (
+            f"• {r['symbol']} skor {r.get('score')} | "
+            f"{r.get('quality_grade','')} | "
+            f"para15m {r.get('money_flow_15m') or r.get('para15m') or 0} | "
+            f"RS20 {r.get('rs_xu100_20')} | "
+            f"kırılım {r.get('breakout_level')} | "
+            f"fib1.618 {r.get('fib_1618')} | "
+            f"R/R {r.get('risk_reward')} | "
+            f"{','.join(r.get('_frames', {}).keys())} | "
+            f"{r.get('reasons','')}\n"
+        )
 
-v9_symbols = {r.get("symbol") for r in v9_top}
-v13_symbols = {r.get("symbol") for r in top}
-common_symbols = list(v9_symbols & v13_symbols)
+    v9_symbols = {r.get("symbol") for r in v9_top}
+    v13_symbols = {r.get("symbol") for r in top}
+    common_symbols = list(v9_symbols & v13_symbols)
 
-summary += "\n🔥 <b>ORTAK RADAR</b>\n"
-if common_symbols:
-    for sym in common_symbols[:10]:
-        summary += f"• {sym} → V9 + V13 kesişimi\n"
-else:
-    summary += "• Kesişim yok.\n"
+    summary += "\n🔥 <b>ORTAK RADAR</b>\n"
+    if common_symbols:
+        for sym in common_symbols[:10]:
+            summary += f"• {sym} → V9 + V13 kesişimi\n"
+    else:
+        summary += "• Kesişim yok.\n"
 
     for r in top[:10]:
         summary += (
