@@ -1184,14 +1184,29 @@ def radar_memory_counts():
     return Counter(symbols)
 
 
-def format_memory_leaders(limit=10):
-    counts = radar_memory_counts()
-    if not counts:
-        return "\n🧠 Radar Hafızası: Henüz veri yok.\n"
+def format_memory_leaders(limit=5):
+    rows = load_radar_memory()
 
-    text = "\n🧠 <b>Son Radar Hafızası</b>\n"
-    for sym, cnt in counts.most_common(limit):
+    v9 = Counter()
+    v13 = Counter()
+
+    for r in rows:
+        sym = r.get("symbol", "")
+        radar = r.get("radar", "")
+
+        if radar == "V9":
+            v9[sym] += 1
+        elif radar == "V13":
+            v13[sym] += 1
+
+    text = "\n🧠 <b>V9 Hafızası</b>\n"
+    for sym, cnt in v9.most_common(limit):
         text += f"• {sym}: {cnt} kez\n"
+
+    text += "\n🧠 <b>V13 Hafızası</b>\n"
+    for sym, cnt in v13.most_common(limit):
+        text += f"• {sym}: {cnt} kez\n"
+
     return text
 
 def main():
@@ -1444,12 +1459,40 @@ def main():
     v13_symbols = {r.get("symbol") for r in top}
     common_symbols = list(v9_symbols & v13_symbols)
 
+    strong = []
+
+    rows = load_radar_memory()
+
+    for sym in common_symbols:
+
+        v9_count = sum(
+            1 for r in rows
+            if r.get("symbol") == sym and r.get("radar") == "V9"
+        )
+
+        v13_count = sum(
+            1 for r in rows
+            if r.get("symbol") == sym and r.get("radar") == "V13"
+        )
+
+        if v9_count >= 2 and v13_count >= 2:
+            strong.append(sym)
+            
     summary += "\n🔥 <b>ORTAK RADAR</b>\n"
     if common_symbols:
         for sym in common_symbols[:10]:
             summary += f"• {sym} → V9 + V13 kesişimi\n"
     else:
         summary += "• Kesişim yok.\n"
+        
+    summary += "\n🔥 <b>GÜÇLÜ KESİŞİM</b>\n"
+
+    if strong:
+        for sym in strong:
+            summary += f"• {sym}\n"
+    else:
+        summary += "• Henüz yok.\n"
+        
     
     save_radar_memory(started, "V9", v9_top)
     save_radar_memory(started, "V13", top)
