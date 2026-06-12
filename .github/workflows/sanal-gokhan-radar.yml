@@ -1,9 +1,7 @@
+
 name: SANAL_GOKHAN_RADAR_TEK_CATI
 
 on:
-  workflow_dispatch:
-
-  on:
   workflow_dispatch:
   schedule:
     - cron: "0,15,30,45 6-15 * * 1-5"
@@ -11,6 +9,9 @@ on:
 jobs:
   scan-and-send:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
 
     permissions:
       contents: write
