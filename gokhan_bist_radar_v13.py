@@ -1239,7 +1239,14 @@ def format_radar_favorites(current_symbols, limit=8):
 
         trust = min(trust, 100)
 
-        favorites.append((sym, v9_count, v13_count, trust))
+        if trust >= 70:
+            label = "🟢 ÇOK GÜÇLÜ"
+        elif trust >= 40:
+            label = "🟡 İZLE"
+        else:
+            label = "🔴 ERKEN ADAY"
+
+        favorites.append((sym, v9_count, v13_count, trust, label))
 
     favorites = sorted(favorites, key=lambda x: x[3], reverse=True)
 
@@ -1248,8 +1255,11 @@ def format_radar_favorites(current_symbols, limit=8):
     if not favorites:
         return text + "• Henüz veri yok.\n"
 
-    for sym, v9c, v13c, trust in favorites[:limit]:
-        text += f"• {sym} → V9:{v9c} | V13:{v13c} | Güven:{trust}/100\n"
+    for sym, v9c, v13c, trust, label in favorites[:limit]:
+        text += (
+            f"• {label} | {sym} → "
+            f"V9:{v9c} | V13:{v13c} | Güven:{trust}/100\n"
+        )
 
     return text
 
