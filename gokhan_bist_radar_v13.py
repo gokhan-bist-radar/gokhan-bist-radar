@@ -1559,8 +1559,8 @@ telegram_send_message(token, chat_id, summary)
 #             p = plot_timeframe_chart(r, tf)
 #             telegram_send_photo(token, chat_id, p)
 
-    print("Bitti. Telegram mesajları gönderildi.")
-    print("CSV:", OUT / "telegram_candidates_v11.csv")
+print("Bitti. Telegram mesajları gönderildi.")
+print("CSV:", OUT / "telegram_candidates_v11.csv")
 
 
 if __name__ == "__main__":
