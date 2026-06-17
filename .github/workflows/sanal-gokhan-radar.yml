@@ -3,7 +3,8 @@ name: SANAL_GOKHAN_RADAR_TEK_CATI
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0,15,30,45 6-15 * * 1-5'
+    - cron: 0,30 7-14 * * 1-5'
+
 
 jobs:
   scan-and-send:
