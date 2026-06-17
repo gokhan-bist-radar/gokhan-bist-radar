@@ -1209,6 +1209,50 @@ def format_memory_leaders(limit=5):
 
     return text
 
+def get_memory_count(symbol, radar_type=None):
+    rows = load_radar_memory()
+    count = 0
+
+    for r in rows:
+        if r.get("symbol") != symbol:
+            continue
+        if radar_type and r.get("radar") != radar_type:
+            continue
+        count += 1
+
+    return count
+
+
+def format_radar_favorites(current_symbols, limit=8):
+    favorites = []
+
+    for sym in current_symbols:
+        v9_count = get_memory_count(sym, "V9")
+        v13_count = get_memory_count(sym, "V13")
+
+        trust = 0
+        trust += min(v9_count * 3, 45)
+        trust += min(v13_count * 5, 45)
+
+        if v9_count > 0 and v13_count > 0:
+            trust += 10
+
+        trust = min(trust, 100)
+
+        favorites.append((sym, v9_count, v13_count, trust))
+
+    favorites = sorted(favorites, key=lambda x: x[3], reverse=True)
+
+    text = "\n⭐ <b>RADAR FAVORİLERİ</b>\n"
+
+    if not favorites:
+        return text + "• Henüz veri yok.\n"
+
+    for sym, v9c, v13c, trust in favorites[:limit]:
+        text += f"• {sym} → V9:{v9c} | V13:{v13c} | Güven:{trust}/100\n"
+
+    return text
+
 def main():
     cfg = load_config()
 
@@ -1494,10 +1538,18 @@ def main():
         summary += "• Henüz yok.\n"
         
     
-    save_radar_memory(started, "V9", v9_top)
-    save_radar_memory(started, "V13", top)
-    
-    summary += format_memory_leaders()
+save_radar_memory(started, "V9", v9_top)
+save_radar_memory(started, "V13", top)
+
+all_current_symbols = list(
+    {r.get("symbol") for r in v9_top} |
+    {r.get("symbol") for r in top}
+)
+
+summary += format_radar_favorites(all_current_symbols)
+summary += format_memory_leaders()
+
+telegram_send_message(token, chat_id, summary)
     
     telegram_send_message(token, chat_id, summary)
 
