@@ -1550,8 +1550,7 @@ summary += format_radar_favorites(all_current_symbols)
 summary += format_memory_leaders()
 
 telegram_send_message(token, chat_id, summary)
-    
-    telegram_send_message(token, chat_id, summary)
+
 
     # Grafik gönderimi kapatıldı
 # for r in top[:cfg["send_chart_top_n"]]:
