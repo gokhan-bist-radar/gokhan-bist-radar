@@ -1537,19 +1537,18 @@ def main():
     else:
         summary += "• Henüz yok.\n"
         
-    
-save_radar_memory(started, "V9", v9_top)
-save_radar_memory(started, "V13", top)
+    save_radar_memory(started, "V9", v9_top)
+    save_radar_memory(started, "V13", top)
 
-all_current_symbols = list(
-    {r.get("symbol") for r in v9_top} |
-    {r.get("symbol") for r in top}
-)
+    all_current_symbols = list(
+        {r.get("symbol") for r in v9_top} |
+        {r.get("symbol") for r in top}
+    )
 
-summary += format_radar_favorites(all_current_symbols)
-summary += format_memory_leaders()
+    summary += format_radar_favorites(all_current_symbols)
+    summary += format_memory_leaders()
 
-telegram_send_message(token, chat_id, summary)
+    telegram_send_message(token, chat_id, summary)
 
 
     # Grafik gönderimi kapatıldı
@@ -1559,8 +1558,8 @@ telegram_send_message(token, chat_id, summary)
 #             p = plot_timeframe_chart(r, tf)
 #             telegram_send_photo(token, chat_id, p)
 
-print("Bitti. Telegram mesajları gönderildi.")
-print("CSV:", OUT / "telegram_candidates_v11.csv")
+    print("Bitti. Telegram mesajları gönderildi.")
+    print("CSV:", OUT / "telegram_candidates_v11.csv")
 
 
 if __name__ == "__main__":
