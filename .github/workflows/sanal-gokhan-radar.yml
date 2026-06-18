@@ -37,6 +37,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add radar_memory.csv
+          git add radar_memory.csv radar_signals.csv
           git commit -m "Update radar memory" || echo "No memory changes"
           git push
