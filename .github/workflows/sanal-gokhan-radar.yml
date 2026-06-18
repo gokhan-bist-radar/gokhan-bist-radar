@@ -1,4 +1,4 @@
- name: SANAL_GOKHAN_RADAR_TEK_CATI
+name: SANAL_GOKHAN_RADAR_TEK_CATI
 
 on:
   workflow_dispatch:
@@ -25,12 +25,10 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Kütüphaneleri yükle
+      - name: Kutuphaneleri yukle
         run: |
           pip install -r requirements.txt
 
       - name: Tek cati radar calistir
         run: |
           python gokhan_bist_radar_v13.py
-
-      
