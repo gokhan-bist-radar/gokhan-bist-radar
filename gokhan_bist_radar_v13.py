@@ -1177,6 +1177,33 @@ def save_radar_memory(started, radar_name, top):
         writer.writeheader()
         writer.writerows(rows[-1500:])
 
+def save_radar_signals(started, radar_name, top):
+    exists = SIGNALS_FILE.exists()
+
+    with open(SIGNALS_FILE, "a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=[
+                "date",
+                "radar",
+                "symbol",
+                "score",
+                "para15m"
+            ]
+        )
+
+        if not exists:
+            writer.writeheader()
+
+        for r in top:
+            writer.writerow({
+                "date": started,
+                "radar": radar_name,
+                "symbol": str(r.get("symbol", "")),
+                "score": str(r.get("score", "")),
+                "para15m": str(r.get("para15m", ""))
+            })
+
 print("MEMORY FILE EXISTS:", os.path.exists("radar_memory.csv"))
 def radar_memory_counts():
     rows = load_radar_memory()
