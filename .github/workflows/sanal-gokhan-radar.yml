@@ -33,6 +33,4 @@ jobs:
         run: |
           python gokhan_bist_radar_v13.py
 
-      - name: Tek cati radar calistir
-        run: |
-          python gokhan_bist_radar_v13.py
+      
