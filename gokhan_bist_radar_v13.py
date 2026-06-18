@@ -1578,6 +1578,9 @@ def main():
     save_radar_memory(started, "V9", v9_top)
     save_radar_memory(started, "V13", top)
 
+    save_radar_signals(started, "V9", v9_top)
+    save_radar_signals(started, "V13", top)
+
     all_current_symbols = list(
         {r.get("symbol") for r in v9_top} |
         {r.get("symbol") for r in top}
