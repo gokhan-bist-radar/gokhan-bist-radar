@@ -1,4 +1,4 @@
-name: SANAL_GOKHAN_RADAR_TEK_CATI
+ name: SANAL_GOKHAN_RADAR_TEK_CATI
 
 on:
   workflow_dispatch:
@@ -33,10 +33,6 @@ jobs:
         run: |
           python gokhan_bist_radar_v13.py
 
-      - name: Radar hafizasini kaydet
+      - name: Tek cati radar calistir
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add radar_memory.csv radar_signals.csv
-          git commit -m "Update radar memory" || echo "No memory changes"
-          git push
+          python gokhan_bist_radar_v13.py
