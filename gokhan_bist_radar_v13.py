@@ -40,6 +40,7 @@ CHARTS = OUT / "charts"
 OUT.mkdir(exist_ok=True)
 CHARTS.mkdir(exist_ok=True)
 MEMORY_FILE = Path("radar_memory.csv")
+SIGNALS_FILE = Path("radar_signals.csv")
 
 # ============================================================
 # CONFIG / SYMBOL
