@@ -45,3 +45,14 @@ jobs:
       - name: Tek cati radar calistir
         run: |
           python gokhan_bist_radar_v13.py
+
+      - name: Radar hafizasini kaydet
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+
+          git add radar_memory.csv radar_signals.csv radar_performance.csv
+
+          git commit -m "Radar memory update" || echo "No changes"
+
+          git push
