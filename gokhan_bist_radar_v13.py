@@ -1179,21 +1179,41 @@ def save_radar_memory(started, radar_name, top):
         writer.writerows(rows[-1500:])
 
 def save_radar_signals(started, radar_name, top):
-    exists = SIGNALS_FILE.exists()
+    signal_exists = SIGNALS_FILE.exists()
+    perf_exists = PERFORMANCE_FILE.exists()
+
+    signal_fields = [
+        "date",
+        "radar",
+        "symbol",
+        "score",
+        "para15m",
+        "close",
+        "rs20",
+        "rs60",
+        "rr",
+        "quality_grade"
+    ]
+
+    perf_fields = [
+        "date",
+        "radar",
+        "symbol",
+        "score",
+        "para15m",
+        "signal_close",
+        "close_1d",
+        "close_3d",
+        "close_5d",
+        "perf_1d_pct",
+        "perf_3d_pct",
+        "perf_5d_pct"
+    ]
 
     with open(SIGNALS_FILE, "a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=[
-                "date",
-                "radar",
-                "symbol",
-                "score",
-                "para15m"
-            ]
-        )
+        writer = csv.DictWriter(f, fieldnames=signal_fields)
 
-        if not exists:
+        if not signal_exists:
             writer.writeheader()
 
         for r in top:
@@ -1201,8 +1221,35 @@ def save_radar_signals(started, radar_name, top):
                 "date": started,
                 "radar": radar_name,
                 "symbol": str(r.get("symbol", "")),
-                "score": str(r.get("score", "")),
-                "para15m": str(r.get("para15m", ""))
+                "score": r.get("score", ""),
+                "para15m": r.get("money_flow_15m", ""),
+                "close": r.get("close", ""),
+                "rs20": r.get("rs_xu100_20", ""),
+                "rs60": r.get("rs_xu100_60", ""),
+                "rr": r.get("risk_reward", ""),
+                "quality_grade": r.get("quality_grade", "")
+            })
+
+    with open(PERFORMANCE_FILE, "a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=perf_fields)
+
+        if not perf_exists:
+            writer.writeheader()
+
+        for r in top:
+            writer.writerow({
+                "date": started,
+                "radar": radar_name,
+                "symbol": str(r.get("symbol", "")),
+                "score": r.get("score", ""),
+                "para15m": r.get("money_flow_15m", ""),
+                "signal_close": r.get("close", ""),
+                "close_1d": "",
+                "close_3d": "",
+                "close_5d": "",
+                "perf_1d_pct": "",
+                "perf_3d_pct": "",
+                "perf_5d_pct": ""
             })
 
 print("MEMORY FILE EXISTS:", os.path.exists("radar_memory.csv"))
