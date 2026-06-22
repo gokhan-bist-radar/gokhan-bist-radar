@@ -3,20 +3,20 @@ name: SANAL_GOKHAN_RADAR_TEK_CATI
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 7 * * 1-5'
-    - cron: '30 7 * * 1-5'
-    - cron: '0 8 * * 1-5'
-    - cron: '30 8 * * 1-5'
-    - cron: '0 9 * * 1-5'
-    - cron: '30 9 * * 1-5'
-    - cron: '0 10 * * 1-5'
-    - cron: '0 11 * * 1-5'
-    - cron: '0 12 * * 1-5'
-    - cron: '0 13 * * 1-5'
-    - cron: '30 13 * * 1-5'
-    - cron: '0 14 * * 1-5'
-    - cron: '30 14 * * 1-5'
-    - cron: '15 15 * * 1-5'
+    - cron: '15 7 * * 1-5'   # 10:15 TR
+    - cron: '30 7 * * 1-5'   # 10:30 TR
+    - cron: '0 8 * * 1-5'    # 11:00 TR
+    - cron: '30 8 * * 1-5'   # 11:30 TR
+    - cron: '0 9 * * 1-5'    # 12:00 TR
+    - cron: '30 9 * * 1-5'   # 12:30 TR
+    - cron: '0 10 * * 1-5'   # 13:00 TR
+    - cron: '0 11 * * 1-5'   # 14:00 TR
+    - cron: '0 12 * * 1-5'   # 15:00 TR
+    - cron: '0 13 * * 1-5'   # 16:00 TR
+    - cron: '30 13 * * 1-5'  # 16:30 TR
+    - cron: '0 14 * * 1-5'   # 17:00 TR
+    - cron: '30 14 * * 1-5'  # 17:30 TR
+    - cron: '15 15 * * 1-5'  # 18:15 TR
 
 jobs:
   scan-and-send:
