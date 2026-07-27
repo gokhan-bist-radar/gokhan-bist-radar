@@ -3,19 +3,19 @@ name: SANAL_GOKHAN_RADAR_TEK_CATI
 on:
   workflow_dispatch:
   schedule:
-    - cron: '7 7 * * 1-5'    # 10:07 TR
-    - cron: '22 7 * * 1-5'   # 10:22 TR (açılış sonrası yoğun saat)
-    - cron: '52 7 * * 1-5'   # 10:52 TR
-    - cron: '37 8 * * 1-5'   # 11:37 TR
-    - cron: '22 9 * * 1-5'   # 12:22 TR
-    - cron: '7 11 * * 1-5'   # 14:07 TR
-    - cron: '37 12 * * 1-5'  # 15:37 TR
-    - cron: '22 14 * * 1-5'  # 17:22 TR (kapanış öncesi)
+    # GitHub Actions tam saat ve yarim saatlerde yogunlasabildigi icin
+    # taramalar bilerek 06, 21, 36 ve 51. dakikalara dagitildi.
+    # Turkiye saatiyle hafta ici 10:06-17:51 arasi 15 dakikada bir.
+    - cron: '6,21,36,51 7-14 * * 1-5'
 
+concurrency:
+  group: sanal-gokhan-radar
+  cancel-in-progress: false
 
 jobs:
   scan-and-send:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
 
     permissions:
       contents: write
@@ -27,6 +27,8 @@ jobs:
     steps:
       - name: Repo indir
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Python kur
         uses: actions/setup-python@v5
@@ -43,11 +45,24 @@ jobs:
 
       - name: Radar hafizasini kaydet
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add radar_memory.csv radar_signals.csv radar_performance.csv
-          git commit -m "Radar memory update" || echo "No changes"
 
-          git pull --rebase origin main || true
-          git push || git push --force-with-lease
+          if git diff --cached --quiet; then
+            echo "Kaydedilecek yeni radar verisi yok."
+            exit 0
+          fi
+
+          git commit -m "Radar update $(date -u +'%Y-%m-%d %H:%M UTC')"
+
+          # Gecikmis veya pes pese gelen calismalarda push cakismasini azaltir.
+          for attempt in 1 2 3; do
+            git pull --rebase origin main && git push && exit 0
+            echo "Push denemesi $attempt basarisiz; yeniden deneniyor..."
+            sleep $((attempt * 10))
+          done
+
+          echo "Radar verisi 3 denemede de GitHub'a yazilamadi."
+          exit 1
